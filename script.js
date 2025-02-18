@@ -16,3 +16,10 @@ function addName(type) {
         document.getElementById(`input-${type}`).style.display = "none"; // Hide input
     }
 }
+
+function selectResult(resultType) {
+    document.getElementById(`result-over1`).classList.remove("selected");
+    document.getElementById(`result-under1`).classList.remove("selected");
+
+    document.getElementById(`result-${resultType}`).classList.add("selected");
+}
