@@ -12,38 +12,38 @@
         <p>Here are the latest bets available:</p>
     </header>
 
-    <main>
+    <main id="bets-container">
+        <!-- Bet 1 -->
         <div class="bet-box">
-            <h2>Bet 1</h2>
-            <p>Will Team A score more than <strong>2.5</strong> goals?</p>
-            <span>Over / Under 2.5</span>
+            <h2>Will Team A score more than 2.5 goals?</h2>
+            <div class="bet-buttons">
+                <div class="bet-option under" onclick="openInput('under1')">−</div>
+                <div class="bet-option over" onclick="openInput('over1')">+</div>
+            </div>
+            <div class="bet-input" id="input-under1">
+                <input type="text" id="name-under1" placeholder="Enter name">
+                <button onclick="addName('under1')">Enter</button>
+            </div>
+            <div class="bet-input" id="input-over1">
+                <input type="text" id="name-over1" placeholder="Enter name">
+                <button onclick="addName('over1')">Enter</button>
+            </div>
+            <div class="bet-results">
+                <div>
+                    <h3>Under</h3>
+                    <ul id="list-under1"></ul>
+                </div>
+                <div>
+                    <h3>Over</h3>
+                    <ul id="list-over1"></ul>
+                </div>
+            </div>
         </div>
 
-        <div class="bet-box">
-            <h2>Bet 2</h2>
-            <p>Will Player X make over <strong>5.5</strong> assists?</p>
-            <span>Over / Under 5.5</span>
-        </div>
-
-        <div class="bet-box">
-            <h2>Bet 3</h2>
-            <p>Will there be more than <strong>50</strong> total points?</p>
-            <span>Over / Under 50</span>
-        </div>
-
-        <div class="bet-box">
-            <h2>Bet 4</h2>
-            <p>Will there be a goal in the first <strong>10</strong> minutes?</p>
-            <span>Yes / No</span>
-        </div>
-
-        <div class="bet-box">
-            <h2>Bet 5</h2>
-            <p>Will Player Y score more than <strong>1.5</strong> goals?</p>
-            <span>Over / Under 1.5</span>
-        </div>
+        <!-- Repeat this structure for other bets -->
     </main>
 
     <script src="script.js"></script>
 </body>
 </html>
+
