@@ -12,15 +12,33 @@ header {
     padding: 20px;
 }
 
-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
 }
 
-button:hover {
-    background-color: #0056b3;
+.bet-box {
+    background: white;
+    padding: 20px;
+    margin: 10px;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.bet-box h2 {
+    margin: 0;
+    color: #007bff;
+}
+
+.bet-box p {
+    font-size: 18px;
+}
+
+.bet-box span {
+    font-weight: bold;
+    color: #ff4500;
 }
