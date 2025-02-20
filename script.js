@@ -1,15 +1,21 @@
-// Predefined users (would be stored in a real database)
+// Predefined users (would normally be stored in a database)
 const users = {
     "user1": "password123",
     "admin": "adminpass"
 };
 
-// Check if a user is logged in when the page loads
+// Load correct page data
 window.onload = function() {
-    const loggedInUser = sessionStorage.getItem("loggedInUser");
-    if (loggedInUser) {
-        showBets(loggedInUser);
-        loadUserBet(loggedInUser);
+    if (document.getElementById("login-container")) {
+        // Betting page
+        const loggedInUser = sessionStorage.getItem("loggedInUser");
+        if (loggedInUser) {
+            showBets(loggedInUser);
+            loadUserBet(loggedInUser);
+        }
+    } else {
+        // Scoreboard page
+        loadScoreboard();
     }
 };
 
@@ -46,26 +52,28 @@ function placeBet(type) {
     const username = sessionStorage.getItem("loggedInUser");
     if (!username) return;
 
-    // Reset buttons
     document.getElementById("bet-over1").classList.remove("selected");
     document.getElementById("bet-under1").classList.remove("selected");
 
-    // Highlight the selected bet
     document.getElementById(`bet-${type}`).classList.add("selected");
 
-    // Store bet in local storage per user
     let userBets = JSON.parse(localStorage.getItem("userBets")) || {};
     userBets[username] = type;
     localStorage.setItem("userBets", JSON.stringify(userBets));
+
+    loadScoreboard();
 }
 
-// Load user's previous bet
-function loadUserBet(username) {
+// Load bets on scoreboard
+function loadScoreboard() {
     let userBets = JSON.parse(localStorage.getItem("userBets")) || {};
-    let betType = userBets[username];
+    document.getElementById("score-under1").innerHTML = "";
+    document.getElementById("score-over1").innerHTML = "";
 
-    if (betType) {
-        document.getElementById(`bet-${betType}`).classList.add("selected");
-    }
+    Object.keys(userBets).forEach(username => {
+        let listItem = document.createElement("li");
+        listItem.textContent = username;
+        document.getElementById(`score-${userBets[username]}`).appendChild(listItem);
+    });
 }
 
