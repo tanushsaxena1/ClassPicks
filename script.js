@@ -153,3 +153,15 @@ window.onload = function() {
         disableBets();
     }
 };
+
+//reset button
+function resetBets() {
+    if (sessionStorage.getItem("loggedInUser") !== "admin") {
+        alert("Only admin can reset bets!");
+        return;
+    }
+    localStorage.removeItem("userBets");
+    loadScoreboard(); // Refresh the scoreboard to remove all bets
+    alert("All bets have been reset.");
+}
+
