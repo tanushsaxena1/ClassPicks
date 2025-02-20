@@ -35,19 +35,45 @@ function showBets(username) {
     document.getElementById("welcome-message").textContent = `Welcome, ${username}`;
     document.getElementById("logout-btn").style.display = "block";
 
-    // Only show Lock Trades button for admin
     const lockTradesBtn = document.getElementById("lock-trades-btn");
+    const unlockTradesBtn = document.getElementById("unlock-trades-btn");
+    const betButtons = document.querySelector(".bet-buttons");
+
     if (username === "admin") {
         lockTradesBtn.style.display = "block";
+        unlockTradesBtn.style.display = "block"; // Show unlock button for admin
+        betButtons.style.display = "none"; // Hide betting buttons for admin
     } else {
         lockTradesBtn.style.display = "none";
+        unlockTradesBtn.style.display = "none";
+        betButtons.style.display = "flex"; // Ensure betting buttons show for regular users
     }
 
-    // Disable bets if locked
     if (isLocked()) {
         disableBets();
     }
 }
+
+// Unlcock trades feature
+function unlockTrades() {
+    if (sessionStorage.getItem("loggedInUser") !== "admin") {
+        alert("Only admin can unlock trades!");
+        return;
+    }
+    localStorage.setItem("tradesLocked", "false");
+    enableBets();
+}
+
+// Enable bet buttons when unlocked
+function enableBets() {
+    document.querySelectorAll(".bet-option").forEach(btn => {
+        btn.disabled = false;
+        btn.style.opacity = "1";
+        btn.style.cursor = "pointer";
+    });
+}
+
+
 
 // Logout function
 function logoutUser() {
