@@ -2,6 +2,15 @@ function openInput(type) {
     document.getElementById(`input-${type}`).style.display = "block";
 }
 
+// Allow pressing "Enter" to submit name & bet
+document.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        let activeInput = document.activeElement;
+        let type = activeInput.id.includes("under") ? "under1" : "over1";
+        addBet(type);
+    }
+});
+
 function addBet(type) {
     let nameInput = document.getElementById(`name-${type}`);
     let betInput = document.getElementById(`bet-${type}`);
