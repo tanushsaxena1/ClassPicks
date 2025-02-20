@@ -13,10 +13,9 @@ window.onload = function() {
             showBets(loggedInUser);
             loadUserBet(loggedInUser);
         }
-    } else {
-        // Scoreboard page
-        loadScoreboard();
     }
+    // Always load scoreboard (public page)
+    loadScoreboard();
 };
 
 // Login function
@@ -28,6 +27,7 @@ function loginUser() {
         sessionStorage.setItem("loggedInUser", username);
         showBets(username);
         loadUserBet(username);
+        loadScoreboard();
     } else {
         document.getElementById("login-error").style.display = "block";
     }
@@ -47,14 +47,13 @@ function logoutUser() {
     location.reload();
 }
 
-// Save & load bets per user
+// Save & update bets in real time
 function placeBet(type) {
     const username = sessionStorage.getItem("loggedInUser");
     if (!username) return;
 
     document.getElementById("bet-over1").classList.remove("selected");
     document.getElementById("bet-under1").classList.remove("selected");
-
     document.getElementById(`bet-${type}`).classList.add("selected");
 
     let userBets = JSON.parse(localStorage.getItem("userBets")) || {};
@@ -64,7 +63,7 @@ function placeBet(type) {
     loadScoreboard();
 }
 
-// Load bets on scoreboard
+// Load and update scoreboard instantly
 function loadScoreboard() {
     let userBets = JSON.parse(localStorage.getItem("userBets")) || {};
     document.getElementById("score-under1").innerHTML = "";
@@ -76,4 +75,3 @@ function loadScoreboard() {
         document.getElementById(`score-${userBets[username]}`).appendChild(listItem);
     });
 }
-
