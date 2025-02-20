@@ -40,3 +40,39 @@ header {
 #bets-container {
     display: none;
 }
+
+.bet-box {
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.bet-box h2 {
+    margin-bottom: 10px;
+}
+
+.bet-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 0;
+}
+
+.bet-option {
+    width: 100px;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+.bet-option.selected {
+    background-color: #007bff;
+    color: white;
+}
