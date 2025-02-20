@@ -7,13 +7,14 @@ localStorage.setItem("users", JSON.stringify(users));
 
 // Load correct page data
 window.onload = function() {
-    if (document.getElementById("login-container")) {
-        const loggedInUser = sessionStorage.getItem("loggedInUser");
-        if (loggedInUser) {
-            showBets(loggedInUser);
-            loadUserBet(loggedInUser);
-        }
+    const loggedInUser = sessionStorage.getItem("loggedInUser");
+
+    if (loggedInUser) {
+        showBets(loggedInUser);
+        loadUserBet(loggedInUser);
+        checkAdmin(loggedInUser);  // Ensure admin button is checked after login
     }
+
     loadScoreboard();
     updateTradeStatus();
 };
@@ -29,15 +30,19 @@ function loginUser() {
         loadUserBet(username);
         loadScoreboard();
         updateTradeStatus();
-
-        // Show Lock/Unlock button if admin is logged in
-        if (username === "admin") {
-            document.getElementById("lock-button").style.display = "block";
-        } else {
-            document.getElementById("lock-button").style.display = "none";
-        }
+        checkAdmin(username);  // Ensure admin button shows if user is admin
     } else {
         document.getElementById("login-error").style.display = "block";
+    }
+}
+
+// Ensure the admin button is displayed only for the admin
+function checkAdmin(username) {
+    let lockButton = document.getElementById("lock-button");
+    if (username === "admin") {
+        lockButton.style.display = "block";
+    } else {
+        lockButton.style.display = "none";
     }
 }
 
