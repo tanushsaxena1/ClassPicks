@@ -131,15 +131,22 @@ function loginUser() {
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
 
+    console.log("Attempted login:", username, password);
+
     if (users[username] && users[username] === password) {
+        console.log("Login successful for:", username);
         sessionStorage.setItem("loggedInUser", username);
+        document.getElementById("login-error").style.display = "none";
+
         showBets(username);
         loadUserBet(username);
         loadScoreboard();
     } else {
+        console.log("Login failed for:", username);
         document.getElementById("login-error").style.display = "block";
     }
 }
+
 
 // Show betting area after login
 function showBets(username) {
