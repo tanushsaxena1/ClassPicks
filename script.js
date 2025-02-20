@@ -37,15 +37,18 @@ function showBets(username) {
 
     const lockTradesBtn = document.getElementById("lock-trades-btn");
     const unlockTradesBtn = document.getElementById("unlock-trades-btn");
+    const resetBetsBtn = document.getElementById("reset-bets-btn");
     const betBox = document.querySelector(".bet-box");
 
     if (username === "admin") {
         lockTradesBtn.style.display = "block";
         unlockTradesBtn.style.display = "block";
+        resetBetsBtn.style.display = "block"; // Show Reset Bets button for admin
         betBox.style.display = "none"; // Hide betting box for admin
     } else {
         lockTradesBtn.style.display = "none";
         unlockTradesBtn.style.display = "none";
+        resetBetsBtn.style.display = "none";
         betBox.style.display = "block"; // Show betting for normal users
     }
 
@@ -53,6 +56,7 @@ function showBets(username) {
         disableBets();
     }
 }
+
 
 
 // Unlcock trades feature
