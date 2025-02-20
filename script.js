@@ -1,40 +1,38 @@
-function openInput(type) {
-    document.getElementById(`input-${type}`).style.display = "block";
-}
+// Predefined users (normally stored in a database)
+const users = {
+    "user1": "password123",
+    "admin": "adminpass"
+};
 
-// Allow pressing "Enter" to submit name & bet
-document.addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-        let activeInput = document.activeElement;
-        let type = activeInput.id.includes("under") ? "under1" : "over1";
-        addBet(type);
+// Check if a user is logged in
+window.onload = function() {
+    const loggedInUser = sessionStorage.getItem("loggedInUser");
+    if (loggedInUser) {
+        showBets(loggedInUser);
     }
-});
+};
 
-function addBet(type) {
-    let nameInput = document.getElementById(`name-${type}`);
-    let betInput = document.getElementById(`bet-${type}`);
+function loginUser() {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-    let name = nameInput.value.trim();
-    let betAmount = betInput.value.trim();
-
-    if (name && betAmount && !isNaN(betAmount) && betAmount > 0) {
-        let list = document.getElementById(`list-${type}`);
-        let listItem = document.createElement("li");
-        listItem.textContent = `${name} - $${parseFloat(betAmount).toFixed(2)}`;
-        list.appendChild(listItem);
-        
-        nameInput.value = ""; // Clear name input
-        betInput.value = ""; // Clear bet amount input
-        document.getElementById(`input-${type}`).style.display = "none"; // Hide input
+    if (users[username] && users[username] === password) {
+        sessionStorage.setItem("loggedInUser", username);
+        showBets(username);
     } else {
-        alert("Please enter a valid name and bet amount.");
+        document.getElementById("login-error").style.display = "block";
     }
 }
 
-function selectResult(resultType) {
-    document.getElementById(`result-over1`).classList.remove("selected");
-    document.getElementById(`result-under1`).classList.remove("selected");
-
-    document.getElementById(`result-${resultType}`).classList.add("selected");
+function showBets(username) {
+    document.getElementById("login-container").style.display = "none";
+    document.getElementById("bets-container").style.display = "block";
+    document.getElementById("welcome-message").textContent = `Welcome, ${username}`;
+    document.getElementById("logout-btn").style.display = "block";
 }
+
+function logoutUser() {
+    sessionStorage.removeItem("loggedInUser");
+    location.reload();
+}
+
