@@ -8,14 +8,12 @@ localStorage.setItem("users", JSON.stringify(users));
 // Load correct page data
 window.onload = function() {
     if (document.getElementById("login-container")) {
-        // Betting page
         const loggedInUser = sessionStorage.getItem("loggedInUser");
         if (loggedInUser) {
             showBets(loggedInUser);
             loadUserBet(loggedInUser);
         }
     }
-    // Always load scoreboard
     loadScoreboard();
     updateTradeStatus();
 };
@@ -35,6 +33,8 @@ function loginUser() {
         // Show Lock/Unlock button if admin is logged in
         if (username === "admin") {
             document.getElementById("lock-button").style.display = "block";
+        } else {
+            document.getElementById("lock-button").style.display = "none";
         }
     } else {
         document.getElementById("login-error").style.display = "block";
