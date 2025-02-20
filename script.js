@@ -1,7 +1,8 @@
 // Predefined users (would normally be stored in a database)
 const users = {
     "user1": "password123",
-    "admin": "adminpass"
+    "admin": "adminpass",
+    "tanush": "221807"
 };
 
 // Load correct page data
