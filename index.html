@@ -24,13 +24,13 @@
         <p id="login-error" style="color: red; display: none;">Invalid credentials, try again.</p>
     </main>
 
-    <!-- Betting Area -->
+    <!-- Betting Section (Visible Only After Login) -->
     <main id="bets-container" style="display: none;">
         <div class="bet-box">
             <h2>Will Team A score more than 2.5 goals?</h2>
             <div class="bet-buttons">
-                <div class="bet-option under" id="bet-under1" onclick="placeBet('under1')">Under</div>
-                <div class="bet-option over" id="bet-over1" onclick="placeBet('over1')">Over</div>
+                <button class="bet-option" id="bet-under1" onclick="placeBet('under1')">Under</button>
+                <button class="bet-option" id="bet-over1" onclick="placeBet('over1')">Over</button>
             </div>
         </div>
     </main>
@@ -38,4 +38,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
