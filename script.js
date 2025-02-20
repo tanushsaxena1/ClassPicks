@@ -2,18 +2,24 @@ function openInput(type) {
     document.getElementById(`input-${type}`).style.display = "block";
 }
 
-function addName(type) {
-    let input = document.getElementById(`name-${type}`);
-    let name = input.value.trim();
+function addBet(type) {
+    let nameInput = document.getElementById(`name-${type}`);
+    let betInput = document.getElementById(`bet-${type}`);
 
-    if (name) {
+    let name = nameInput.value.trim();
+    let betAmount = betInput.value.trim();
+
+    if (name && betAmount && !isNaN(betAmount) && betAmount > 0) {
         let list = document.getElementById(`list-${type}`);
         let listItem = document.createElement("li");
-        listItem.textContent = name;
+        listItem.textContent = `${name} - $${parseFloat(betAmount).toFixed(2)}`;
         list.appendChild(listItem);
         
-        input.value = ""; // Clear input
+        nameInput.value = ""; // Clear name input
+        betInput.value = ""; // Clear bet amount input
         document.getElementById(`input-${type}`).style.display = "none"; // Hide input
+    } else {
+        alert("Please enter a valid name and bet amount.");
     }
 }
 
