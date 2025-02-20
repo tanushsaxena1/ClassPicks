@@ -1,10 +1,10 @@
-// Predefined users (in a real app, this would be a database)
+// Predefined users (would be stored in a real database)
 const users = {
     "user1": "password123",
     "admin": "adminpass"
 };
 
-// Load user session
+// Check if a user is logged in when the page loads
 window.onload = function() {
     const loggedInUser = sessionStorage.getItem("loggedInUser");
     if (loggedInUser) {
@@ -13,7 +13,7 @@ window.onload = function() {
     }
 };
 
-// Handle login
+// Login function
 function loginUser() {
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
@@ -27,7 +27,7 @@ function loginUser() {
     }
 }
 
-// Display betting area
+// Show betting area after login
 function showBets(username) {
     document.getElementById("login-container").style.display = "none";
     document.getElementById("bets-container").style.display = "block";
@@ -35,31 +35,31 @@ function showBets(username) {
     document.getElementById("logout-btn").style.display = "block";
 }
 
-// Handle logout
+// Logout function
 function logoutUser() {
     sessionStorage.removeItem("loggedInUser");
     location.reload();
 }
 
-// Save and load individual bets
+// Save & load bets per user
 function placeBet(type) {
     const username = sessionStorage.getItem("loggedInUser");
     if (!username) return;
 
-    // Remove selection from both buttons
+    // Reset buttons
     document.getElementById("bet-over1").classList.remove("selected");
     document.getElementById("bet-under1").classList.remove("selected");
 
     // Highlight the selected bet
     document.getElementById(`bet-${type}`).classList.add("selected");
 
-    // Save bet in local storage
+    // Store bet in local storage per user
     let userBets = JSON.parse(localStorage.getItem("userBets")) || {};
-    userBets[username] = type;  // Store only for logged-in user
+    userBets[username] = type;
     localStorage.setItem("userBets", JSON.stringify(userBets));
 }
 
-// Load user-specific bet on login
+// Load user's previous bet
 function loadUserBet(username) {
     let userBets = JSON.parse(localStorage.getItem("userBets")) || {};
     let betType = userBets[username];
@@ -68,5 +68,4 @@ function loadUserBet(username) {
         document.getElementById(`bet-${betType}`).classList.add("selected");
     }
 }
-
 
