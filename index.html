@@ -13,8 +13,6 @@
             <span id="welcome-message"></span>
             <button id="logout-btn" onclick="logoutUser()" style="display: none;">Logout</button>
         </div>
-        <!-- Admin Lock Button (Only visible to admin) -->
-        <button id="lock-button" onclick="toggleTrades()" style="display: none;">Lock Trades</button>
     </header>
 
     <!-- Login Form -->
@@ -26,7 +24,7 @@
         <p id="login-error" style="color: red; display: none;">Invalid credentials, try again.</p>
     </main>
 
-    <!-- Betting Section -->
+    <!-- Betting Section (Visible Only After Login) -->
     <main id="bets-container" style="display: none;">
         <div class="bet-box">
             <h2>Will Team A score more than 2.5 goals?</h2>
