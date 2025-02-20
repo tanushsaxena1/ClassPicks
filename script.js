@@ -43,21 +43,19 @@ function showBets(username) {
     if (username === "admin") {
         lockTradesBtn.style.display = "block";
         unlockTradesBtn.style.display = "block";
-        resetBetsBtn.style.display = "block"; // Show Reset Bets button for admin
-        betBox.style.display = "none"; // Hide betting box for admin
+        resetBetsBtn.style.display = "block"; // ✅ FIXED: Show Reset Bets button for admin
+        betBox.style.display = "none"; // ✅ Hide betting options for admin
     } else {
         lockTradesBtn.style.display = "none";
         unlockTradesBtn.style.display = "none";
-        resetBetsBtn.style.display = "none";
-        betBox.style.display = "block"; // Show betting for normal users
+        resetBetsBtn.style.display = "none"; // ✅ Hide Reset button for normal users
+        betBox.style.display = "block"; // ✅ Show betting options for normal users
     }
 
     if (isLocked()) {
         disableBets();
     }
 }
-
-
 
 // Unlcock trades feature
 function unlockTrades() {
@@ -165,7 +163,24 @@ function resetBets() {
         return;
     }
     localStorage.removeItem("userBets");
-    loadScoreboard(); // Refresh the scoreboard to remove all bets
+    loadScoreboard(); // Refresh scoreboard
     alert("All bets have been reset.");
 }
+
+// admin reload
+window.onload = function() {
+    const loggedInUser = sessionStorage.getItem("loggedInUser");
+
+    if (loggedInUser) {
+        showBets(loggedInUser);
+        loadUserBet(loggedInUser);
+    }
+    
+    loadScoreboard();
+
+    if (isLocked()) {
+        disableBets();
+    }
+};
+
 
