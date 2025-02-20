@@ -1,40 +1,9 @@
-// Load users from localStorage (or use predefined)
+// Predefined users (would normally be stored in a database)
 let users = JSON.parse(localStorage.getItem("users")) || {
     "user1": "password123",
     "admin": "adminpass"
 };
-
-// Save users back to localStorage
 localStorage.setItem("users", JSON.stringify(users));
-
-function loginUser() {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
-
-    console.log("Attempted login:", username, password);
-
-    if (users[username] && users[username] === password) {
-        console.log("Login successful for:", username);
-        sessionStorage.setItem("loggedInUser", username);
-        showBets(username);
-        loadUserBet(username);
-        loadScoreboard();
-    } else {
-        console.log("Login failed for:", username);
-        document.getElementById("login-error").style.display = "block";
-    }
-}
-
-// Function to add a new user dynamically
-function registerUser(username, password) {
-    let users = JSON.parse(localStorage.getItem("users")) || {};
-    users[username] = password;
-    localStorage.setItem("users", JSON.stringify(users));
-    console.log("User registered:", username);
-}
-
-// Example Usage (You can remove this after adding new users manually)
-registerUser("tanush", "221807");
 
 // Load correct page data
 window.onload = function() {
@@ -46,8 +15,9 @@ window.onload = function() {
             loadUserBet(loggedInUser);
         }
     }
-    // Always load scoreboard (public page)
+    // Always load scoreboard
     loadScoreboard();
+    updateTradeStatus();
 };
 
 // Login function
@@ -60,6 +30,12 @@ function loginUser() {
         showBets(username);
         loadUserBet(username);
         loadScoreboard();
+        updateTradeStatus();
+
+        // Show Lock/Unlock button if admin is logged in
+        if (username === "admin") {
+            document.getElementById("lock-button").style.display = "block";
+        }
     } else {
         document.getElementById("login-error").style.display = "block";
     }
@@ -84,6 +60,12 @@ function placeBet(type) {
     const username = sessionStorage.getItem("loggedInUser");
     if (!username) return;
 
+    // Prevent betting if trades are locked
+    if (localStorage.getItem("tradesLocked") === "true") {
+        alert("Trades are locked! You cannot change your bet.");
+        return;
+    }
+
     document.getElementById("bet-over1").classList.remove("selected");
     document.getElementById("bet-under1").classList.remove("selected");
     document.getElementById(`bet-${type}`).classList.add("selected");
@@ -105,5 +87,29 @@ function loadScoreboard() {
         let listItem = document.createElement("li");
         listItem.textContent = username;
         document.getElementById(`score-${userBets[username]}`).appendChild(listItem);
+    });
+}
+
+// Toggle trade lock/unlock (admin only)
+function toggleTrades() {
+    let isLocked = localStorage.getItem("tradesLocked") === "true";
+    localStorage.setItem("tradesLocked", !isLocked);
+    updateTradeStatus();
+}
+
+// Update trade status on all user screens
+function updateTradeStatus() {
+    let isLocked = localStorage.getItem("tradesLocked") === "true";
+    let lockButton = document.getElementById("lock-button");
+
+    if (lockButton) {
+        lockButton.textContent = isLocked ? "Unlock Trades" : "Lock Trades";
+    }
+
+    let buttons = document.querySelectorAll(".bet-option");
+    buttons.forEach(button => {
+        button.disabled = isLocked;
+        button.style.opacity = isLocked ? "0.5" : "1";
+        button.style.cursor = isLocked ? "not-allowed" : "pointer";
     });
 }
