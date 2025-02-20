@@ -82,24 +82,6 @@ let users = JSON.parse(localStorage.getItem("users")) || {
 // Save users back to localStorage
 localStorage.setItem("users", JSON.stringify(users));
 
-function loginUser() {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
-
-    console.log("Attempted login:", username, password);
-
-    if (users[username] && users[username] === password) {
-        console.log("Login successful for:", username);
-        sessionStorage.setItem("loggedInUser", username);
-        showBets(username);
-        loadUserBet(username);
-        loadScoreboard();
-    } else {
-        console.log("Login failed for:", username);
-        document.getElementById("login-error").style.display = "block";
-    }
-}
-
 // Function to add a new user dynamically
 function registerUser(username, password) {
     let users = JSON.parse(localStorage.getItem("users")) || {};
