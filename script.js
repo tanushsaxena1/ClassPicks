@@ -35,6 +35,7 @@ function showBets(username) {
     document.getElementById("welcome-message").textContent = `Welcome, ${username}`;
     document.getElementById("logout-btn").style.display = "block";
 
+    // Grab the buttons
     const lockTradesBtn = document.getElementById("lock-trades-btn");
     const unlockTradesBtn = document.getElementById("unlock-trades-btn");
     const resetBetsBtn = document.getElementById("reset-bets-btn");
@@ -43,19 +44,20 @@ function showBets(username) {
     if (username === "admin") {
         lockTradesBtn.style.display = "block";
         unlockTradesBtn.style.display = "block";
-        resetBetsBtn.style.display = "block"; // ✅ FIXED: Show Reset Bets button for admin
-        betBox.style.display = "none"; // ✅ Hide betting options for admin
+        resetBetsBtn.style.display = "block"; // ✅ FIX: Ensure Reset Bets button appears
+        betBox.style.display = "none"; // ✅ Admin cannot place bets
     } else {
         lockTradesBtn.style.display = "none";
         unlockTradesBtn.style.display = "none";
         resetBetsBtn.style.display = "none"; // ✅ Hide Reset button for normal users
-        betBox.style.display = "block"; // ✅ Show betting options for normal users
+        betBox.style.display = "block"; // ✅ Show betting options for regular users
     }
 
     if (isLocked()) {
         disableBets();
     }
 }
+
 
 // Unlcock trades feature
 function unlockTrades() {
@@ -162,17 +164,18 @@ function resetBets() {
         alert("Only admin can reset bets!");
         return;
     }
-    localStorage.removeItem("userBets");
-    loadScoreboard(); // Refresh scoreboard
+    localStorage.removeItem("userBets"); // ✅ Erase all stored bets
+    loadScoreboard(); // ✅ Refresh the scoreboard to clear bets
     alert("All bets have been reset.");
 }
+
 
 // admin reload
 window.onload = function() {
     const loggedInUser = sessionStorage.getItem("loggedInUser");
 
     if (loggedInUser) {
-        showBets(loggedInUser);
+        showBets(loggedInUser); // ✅ Fix: Ensures admin sees Reset Bets button
         loadUserBet(loggedInUser);
     }
     
@@ -182,5 +185,6 @@ window.onload = function() {
         disableBets();
     }
 };
+
 
 
