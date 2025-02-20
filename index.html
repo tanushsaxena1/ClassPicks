@@ -20,14 +20,18 @@
                 <div class="bet-option under" onclick="openInput('under1')">−</div>
                 <div class="bet-option over" onclick="openInput('over1')">+</div>
             </div>
+
             <div class="bet-input" id="input-under1">
                 <input type="text" id="name-under1" placeholder="Enter name">
-                <button onclick="addName('under1')">Enter</button>
+                <input type="number" id="bet-under1" placeholder="Enter bet amount">
+                <button onclick="addBet('under1')">Enter</button>
             </div>
             <div class="bet-input" id="input-over1">
                 <input type="text" id="name-over1" placeholder="Enter name">
-                <button onclick="addName('over1')">Enter</button>
+                <input type="number" id="bet-over1" placeholder="Enter bet amount">
+                <button onclick="addBet('over1')">Enter</button>
             </div>
+
             <div class="bet-results">
                 <div>
                     <h3>Under</h3>
@@ -47,15 +51,8 @@
             <button class="result-btn" id="result-under1" onclick="selectResult('under1')">Under</button>
         </div>
 
-        
-
-    
-    
-
     </main>
-    
 
     <script src="script.js"></script>
 </body>
 </html>
-
