@@ -62,11 +62,12 @@ header {
 }
 
 .bet-option {
-    width: 100px;
-    padding: 20px;
+    width: 120px;
+    padding: 15px;
     text-align: center;
     font-size: 18px;
     font-weight: bold;
+    border: none;
     border-radius: 10px;
     cursor: pointer;
     background-color: lightgray;
