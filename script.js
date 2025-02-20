@@ -1,4 +1,5 @@
 // Predefined users (would normally be stored in a database)
+localStorage.clear();
 const users = {
     "user1": "password123",
     "admin": "adminpass",
