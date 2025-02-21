@@ -40,17 +40,20 @@ function showBets(username) {
     const unlockTradesBtn = document.getElementById("unlock-trades-btn");
     const resetBetsBtn = document.getElementById("reset-bets-btn");
     const betBox = document.querySelector(".bet-box");
+    const adminEdit = document.getElementById("admin-edit"); // Edit section
 
     if (username === "admin") {
         lockTradesBtn.style.display = "block";
         unlockTradesBtn.style.display = "block";
-        resetBetsBtn.style.display = "block"; // ✅ FIX: Ensure Reset Bets button appears
-        betBox.style.display = "none"; // ✅ Admin cannot place bets
+        resetBetsBtn.style.display = "block";
+        betBox.style.display = "none"; // Admin cannot place bets
+        adminEdit.style.display = "block"; // Show edit bet feature
     } else {
         lockTradesBtn.style.display = "none";
         unlockTradesBtn.style.display = "none";
-        resetBetsBtn.style.display = "none"; // ✅ Hide Reset button for normal users
-        betBox.style.display = "block"; // ✅ Show betting options for regular users
+        resetBetsBtn.style.display = "none";
+        betBox.style.display = "block";
+        adminEdit.style.display = "none"; // Hide edit feature for normal users
     }
 
     if (isLocked()) {
@@ -58,8 +61,7 @@ function showBets(username) {
     }
 }
 
-
-// Unlcock trades feature
+// Unlock trades feature
 function unlockTrades() {
     if (sessionStorage.getItem("loggedInUser") !== "admin") {
         alert("Only admin can unlock trades!");
@@ -148,16 +150,19 @@ function loadScoreboard() {
     });
 }
 
-
 // On Page Load: Check session & Lock Status
 window.onload = function() {
     const loggedInUser = sessionStorage.getItem("loggedInUser");
-
+    
     if (loggedInUser) {
         showBets(loggedInUser);
         loadUserBet(loggedInUser);
     }
     
+    // Load bet question from localStorage
+    const savedBetQuestion = localStorage.getItem("betQuestion") || "Will Team A score more than 2.5 goals?";
+    document.getElementById("bet-question").textContent = savedBetQuestion;
+
     loadScoreboard();
 
     if (isLocked()) {
@@ -165,7 +170,7 @@ window.onload = function() {
     }
 };
 
-//reset button
+// Reset button
 function resetBets() {
     if (sessionStorage.getItem("loggedInUser") !== "admin") {
         alert("Only admin can reset bets!");
@@ -176,23 +181,23 @@ function resetBets() {
     alert("All bets have been reset.");
 }
 
-
-// admin reload
-window.onload = function() {
-    const loggedInUser = sessionStorage.getItem("loggedInUser");
-
-    if (loggedInUser) {
-        showBets(loggedInUser); // ✅ Fix: Ensures admin sees Reset Bets button
-        loadUserBet(loggedInUser);
+// Admin edit bet feature
+function updateBet() {
+    if (sessionStorage.getItem("loggedInUser") !== "admin") {
+        alert("Only admin can edit bets!");
+        return;
     }
-    
-    loadScoreboard();
 
-    if (isLocked()) {
-        disableBets();
+    const newBet = document.getElementById("edit-bet-input").value.trim();
+    if (!newBet) {
+        alert("Bet question cannot be empty!");
+        return;
     }
-};
 
+    localStorage.setItem("betQuestion", newBet);
+    document.getElementById("bet-question").textContent = newBet;
+    document.getElementById("edit-bet-input").value = ""; // Clear input
 
-
+    alert("Bet updated successfully!");
+}
 
