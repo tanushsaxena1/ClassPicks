@@ -61,7 +61,21 @@ function showBets(username) {
     }
 }
 
-// Unlock trades feature
+// Lock trades function (Only Admin)
+function lockTrades() {
+    if (sessionStorage.getItem("loggedInUser") !== "admin") {
+        alert("Only admin can lock trades!");
+        return;
+    }
+    localStorage.setItem("tradesLocked", "true");
+    disableBets();
+
+    // Highlight the button
+    document.getElementById("lock-trades-btn").classList.add("active");
+    document.getElementById("unlock-trades-btn").classList.remove("active");
+}
+
+// Unlock trades function (Only Admin)
 function unlockTrades() {
     if (sessionStorage.getItem("loggedInUser") !== "admin") {
         alert("Only admin can unlock trades!");
@@ -69,6 +83,10 @@ function unlockTrades() {
     }
     localStorage.setItem("tradesLocked", "false");
     enableBets();
+
+    // Highlight the button
+    document.getElementById("unlock-trades-btn").classList.add("active");
+    document.getElementById("lock-trades-btn").classList.remove("active");
 }
 
 // Enable bet buttons when unlocked
@@ -77,6 +95,15 @@ function enableBets() {
         btn.disabled = false;
         btn.style.opacity = "1";
         btn.style.cursor = "pointer";
+    });
+}
+
+// Disable bet buttons
+function disableBets() {
+    document.querySelectorAll(".bet-option").forEach(btn => {
+        btn.disabled = true;
+        btn.style.opacity = "0.5";
+        btn.style.cursor = "not-allowed";
     });
 }
 
@@ -89,25 +116,6 @@ function logoutUser() {
 // Check if trades are locked
 function isLocked() {
     return localStorage.getItem("tradesLocked") === "true";
-}
-
-// Lock trades function (Only Admin)
-function lockTrades() {
-    if (sessionStorage.getItem("loggedInUser") !== "admin") {
-        alert("Only admin can lock trades!");
-        return;
-    }
-    localStorage.setItem("tradesLocked", "true");
-    disableBets();
-}
-
-// Disable bet buttons
-function disableBets() {
-    document.querySelectorAll(".bet-option").forEach(btn => {
-        btn.disabled = true;
-        btn.style.opacity = "0.5";
-        btn.style.cursor = "not-allowed";
-    });
 }
 
 // Place bet (disabled if trades locked)
@@ -153,12 +161,12 @@ function loadScoreboard() {
 // On Page Load: Check session & Lock Status
 window.onload = function() {
     const loggedInUser = sessionStorage.getItem("loggedInUser");
-    
+
     if (loggedInUser) {
         showBets(loggedInUser);
         loadUserBet(loggedInUser);
     }
-    
+
     // Load bet question from localStorage
     const savedBetQuestion = localStorage.getItem("betQuestion") || "Will Team A score more than 2.5 goals?";
     document.getElementById("bet-question").textContent = savedBetQuestion;
@@ -167,6 +175,9 @@ window.onload = function() {
 
     if (isLocked()) {
         disableBets();
+        document.getElementById("lock-trades-btn").classList.add("active");
+    } else {
+        document.getElementById("unlock-trades-btn").classList.add("active");
     }
 };
 
@@ -200,4 +211,5 @@ function updateBet() {
 
     alert("Bet updated successfully!");
 }
+
 
