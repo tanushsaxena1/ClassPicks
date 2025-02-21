@@ -127,4 +127,34 @@ ul {
     text-align: center;
 }
 
+#admin-edit {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+#admin-edit input {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+    width: 60%;
+}
+
+#admin-edit button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+#admin-edit button:hover {
+    background-color: #0056b3;
+}
+
 
