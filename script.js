@@ -118,12 +118,18 @@ function placeBet(type) {
     const username = sessionStorage.getItem("loggedInUser");
     if (!username) return;
 
+    const betAmount = document.getElementById("bet-amount").value.trim();
+    if (!betAmount || isNaN(betAmount) || betAmount <= 0) {
+        alert("Please enter a valid bet amount!");
+        return;
+    }
+
     document.getElementById("bet-over1").classList.remove("selected");
     document.getElementById("bet-under1").classList.remove("selected");
     document.getElementById(`bet-${type}`).classList.add("selected");
 
     let userBets = JSON.parse(localStorage.getItem("userBets")) || {};
-    userBets[username] = type;
+    userBets[username] = { choice: type, amount: betAmount };
     localStorage.setItem("userBets", JSON.stringify(userBets));
 
     loadScoreboard();
@@ -137,10 +143,11 @@ function loadScoreboard() {
 
     Object.keys(userBets).forEach(username => {
         let listItem = document.createElement("li");
-        listItem.textContent = username;
-        document.getElementById(`score-${userBets[username]}`).appendChild(listItem);
+        listItem.textContent = `${username} ($${userBets[username].amount})`;
+        document.getElementById(`score-${userBets[username].choice}`).appendChild(listItem);
     });
 }
+
 
 // On Page Load: Check session & Lock Status
 window.onload = function() {
@@ -185,6 +192,7 @@ window.onload = function() {
         disableBets();
     }
 };
+
 
 
 
