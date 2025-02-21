@@ -157,4 +157,38 @@ ul {
     background-color: #0056b3;
 }
 
+/* Center and enlarge admin buttons */
+.admin-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Bigger buttons */
+.admin-controls button {
+    width: 200px; /* Increased width */
+    padding: 15px;
+    font-size: 18px; /* Larger text */
+    border-radius: 8px;
+    border: none;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+/* Default hover effect */
+.admin-controls button:hover {
+    background-color: #e0e0e0;
+}
+
+/* Highlight the active button (Locked state) */
+.admin-controls button.active {
+    background-color: #007bff; /* Blue highlight */
+    color: white;
+}
+
 
